@@ -1,43 +1,67 @@
 package com.mycompany.app;
 import java.util.Random;
 import java.util.Scanner;
-/**
- * Hello world!
- */
+
 public class App {
     public static void main(String[] args) {
-//        One();
-//        boolean t = true;
-        //short, double, float, char, long, String
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Вкажіть розмір масиву");
-        int n = Integer.parseInt(scanner.nextLine());
-        int [] array = new int[n];
+        Scanner myScanner = new Scanner(System.in);
+        Random rand = new Random();
 
-        for (int i = 0; i < n; i++) {
-            array[i] = GetRandom(1, 100);
+        System.out.println("=== Тестування таблиці множення ===");
+        System.out.print("Скільки запитань? (натисніть Enter для 10): ");
+        String countLine = myScanner.nextLine();
+        int questions = 10;
+        try {
+            if (!countLine.trim().isEmpty()) {
+                questions = Integer.parseInt(countLine.trim());
+                if (questions <= 0) {
+                    System.out.println("Невірна кількість, встановлено 10 запитань.");
+                    questions = 10;
+                }
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Невірний ввід, буде використано 10 запитань.");
+            questions = 10;
         }
 
-        for(var item : array) {
-            System.out.print(item + "\t");
+        System.out.print("Максимальний множник (наприклад 10) [натисніть Enter для 10]: ");
+        String maxLine = myScanner.nextLine();
+        int max = 10;
+        try {
+            if (!maxLine.trim().isEmpty()) {
+                max = Integer.parseInt(maxLine.trim());
+                if (max <= 0) {
+                    System.out.println("Невірний множник, встановлено 10.");
+                    max = 10;
+                }
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Невірний ввід, буде використано 10.");
+            max = 10;
         }
-//        for (int i = 0; i < n; i++) {
-//            System.out.print(array[i] + "\t");
-//        }
+
+        int correct = 0;
+        for (int i = 1; i <= questions; i++) {
+            int a = rand.nextInt(max) + 1;
+            int b = rand.nextInt(max) + 1;
+            int answer = a * b;
+            System.out.print("Питання " + i + ": " + a + " × " + b + " = ");
+            String ansLine = myScanner.nextLine();
+            try {
+                int given = Integer.parseInt(ansLine.trim());
+                if (given == answer) {
+                    System.out.println("Правильно!");
+                    correct++;
+                } else {
+                    System.out.println("Неправильно. Правильна відповідь: " + answer);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Невірний ввід. Правильна відповідь: " + answer);
+            }
+        }
+
         System.out.println();
-    }
-
-    public static int GetRandom(int min, int max) {
-        Random random = new Random();
-        return random.nextInt(max - min + 1) + min;
-    }
-
-    public static void One() {
-        int age;
-        System.out.println("Вкажіть Ваш вік:");
-        Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine();
-        age = Integer.parseInt(str);
-        System.out.println("Вам зараз " + age);
+        System.out.println("Результат: Ви відповіли правильно на " + correct + " з " + questions + ".");
+        myScanner.close();
     }
 }

@@ -26,4 +26,6 @@ mvn clean compile exec:java -Dexec.mainClass="com.mycompany.app.App"
 mvn clean
 mvn
 mvn exec:java -Dexec.mainClass="com.mycompany.app.App"
+
+mvn compile exec:java -Dexec.mainClass="com.mycompany.app.App"
 ```
